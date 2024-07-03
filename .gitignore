@@ -400,3 +400,8 @@ FodyWeavers.xsd
 # Daynlights
 *.sln
 build/
+*.vcxproj*
+CMakeCache.txt
+CMakeFiles/
+*.csproj
+*.cmake
