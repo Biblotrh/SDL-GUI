@@ -8,4 +8,4 @@ add_executable(SDL-GUI ${CS_FILES})
 
 set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT SDL-GUI)
 
-set_property(TARGET SDL-GUI PROPERTY UNSAFE)
+target_compile_options(SDL-GUI PUBLIC "/unsafe")
