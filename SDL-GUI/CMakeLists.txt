@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.0)
 project(SDL-GUI VERSION 1.0 LANGUAGES CSharp)
 
-file(GLOB CS_FILES "*.cs")
+file(GLOB_RECURSE CS_FILES ${CMAKE_CURRENT_SOURCE_DIR}/*.cs)
 
 add_executable(SDL-GUI ${CS_FILES})
 
