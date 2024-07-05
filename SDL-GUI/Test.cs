@@ -18,6 +18,7 @@ namespace SDL_GUI
 
                 window.PresentWindow();
                 window.EventLoop();
+                window.SyncClock();
             }
 
             window.DestroyWindow();

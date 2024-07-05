@@ -13,6 +13,8 @@ namespace SDLGUI
         public IntPtr window = IntPtr.Zero;
         public IntPtr renderer = IntPtr.Zero;
         public bool running = true;
+        public uint fps = 60;
+        DateTime lastTime = DateTime.Now;
 
         public Window(string title = "Window", int width = 800, int height = 600, 
             SDL.SDL_WindowFlags flags = SDL.SDL_WindowFlags.SDL_WINDOW_SHOWN)
@@ -40,6 +42,17 @@ namespace SDLGUI
             
             SDL.SDL_SetRenderDrawColor(renderer, colour.r, colour.g, colour.b, colour.a);
             SDL.SDL_RenderClear(renderer);
+        }
+        public void SyncClock()
+        {
+            DateTime currentTime = DateTime.Now;
+            TimeSpan timeDiff = currentTime - lastTime;
+            while(Convert.ToUInt32(timeDiff.Milliseconds) < 1000 / fps)
+            {
+                currentTime = DateTime.Now;
+                timeDiff = currentTime - lastTime;
+            }
+            lastTime = currentTime;
         }
         public void PresentWindow()
         {
