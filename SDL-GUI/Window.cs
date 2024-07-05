@@ -6,15 +6,17 @@ namespace SDLGUI
 {
     class Window
     {
-        public string title = "Window";
-        public int width = 800;
-        public int height = 600;
-        public SDL.SDL_WindowFlags flags = SDL.SDL_WindowFlags.SDL_WINDOW_SHOWN;
         public IntPtr window = IntPtr.Zero;
         public IntPtr renderer = IntPtr.Zero;
         public bool running = true;
+        public bool SyncingClock = false;
         public uint fps = 60;
+
         DateTime lastTime = DateTime.Now;
+        string title = "Window";
+        int width = 800;
+        int height = 600;
+        SDL.SDL_WindowFlags flags = SDL.SDL_WindowFlags.SDL_WINDOW_SHOWN;
 
         public Window(string title = "Window", int width = 800, int height = 600, 
             SDL.SDL_WindowFlags flags = SDL.SDL_WindowFlags.SDL_WINDOW_SHOWN)
@@ -43,7 +45,7 @@ namespace SDLGUI
             SDL.SDL_SetRenderDrawColor(renderer, colour.r, colour.g, colour.b, colour.a);
             SDL.SDL_RenderClear(renderer);
         }
-        public void SyncClock()
+        private void SyncClock()
         {
             DateTime currentTime = DateTime.Now;
             TimeSpan timeDiff = currentTime - lastTime;
@@ -57,17 +59,28 @@ namespace SDLGUI
         public void PresentWindow()
         {
             SDL.SDL_RenderPresent(renderer);
+            if (SyncingClock) SyncClock();
         }
-        public void EventLoop()
+        public void EventLoop(Action<SDL.SDL_Event> eventFunction = null)
         {
             SDL.SDL_Event events;
             while (SDL.SDL_PollEvent(out events) != 0)
             {
-                if (events.type == SDL.SDL_EventType.SDL_QUIT)
+                if (eventFunction != null)
                 {
-                    running = false;
-                    break;
+                    eventFunction(events);
                 }
+                else
+                {
+                    DefaultEventHandler(events);
+                }
+            }
+        }
+        private void DefaultEventHandler(SDL.SDL_Event events)
+        {
+            if (events.type == SDL.SDL_EventType.SDL_QUIT)
+            {
+                running = false;
             }
         }
     }
