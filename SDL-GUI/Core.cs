@@ -1,5 +1,4 @@
-﻿
-namespace SDLGUI
+﻿namespace SDLGUI
 {
     public class Colour
     {
