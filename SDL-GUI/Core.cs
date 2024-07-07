@@ -1,6 +1,5 @@
-﻿using SDL2;
-
-namespace SDL_GUI
+﻿
+namespace SDLGUI
 {
     public class Colour
     {

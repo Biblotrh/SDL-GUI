@@ -8,7 +8,6 @@ namespace SDL_GUI
         static void Main()
         {
             Window window = new Window("Test", 800, 600);
-            window.CreateWindow();
 
             Colour backgroundColour = new Colour(255, 255, 0, 255);
 
@@ -19,7 +18,7 @@ namespace SDL_GUI
 
             while (window.running)
             {
-                window.ClearWindow(backgroundColour);
+                window.ClearColorWindow(backgroundColour);
 
 
                 // Events
