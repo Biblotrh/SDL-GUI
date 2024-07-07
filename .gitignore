@@ -406,3 +406,4 @@ CMakeCache.txt
 CMakeFiles/
 *.csproj
 *.cmake
+SDL2-CS/
