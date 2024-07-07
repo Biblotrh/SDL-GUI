@@ -1,12 +1,19 @@
 ﻿using SDLGUI;
+#if DEBUG
+using SDLGUIUNITTEST;
+#endif
 using System;
 
 namespace SDL_GUI
 {
-    static class Test
+    static class MainClass
     {
         static void Main()
         {
+            #if DEBUG
+                SDLGUITEST test = new SDLGUITEST();
+            #endif
+
             Window window = new Window("Test", 800, 600);
 
             Colour backgroundColour = new Colour(255, 255, 0, 255);

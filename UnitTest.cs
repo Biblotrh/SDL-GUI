@@ -1,7 +1,7 @@
 using SDLGUI;
 using System;
 
-namespace SDLGUITEST
+namespace SDLGUIUNITTEST
 {
     class SDLGUITEST
     {
@@ -11,13 +11,26 @@ namespace SDLGUITEST
         public SDLGUITEST()
         {
             Console.ForegroundColor = ConsoleColor.Blue;
-            Console.WriteLine("SDL GUI TEST");
+            Console.WriteLine("SDL GUI UNIT TEST");
             Console.ForegroundColor = ConsoleColor.White;
 
             CORETESTS();
+
+            if(runned == passed)
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("ALL TESTS PASSED");
+                Console.ForegroundColor = ConsoleColor.White;
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(passed + "/" + runned + " TESTS PASSED");
+                Console.ForegroundColor = ConsoleColor.White;
+            }
         }
 
-        public void CORETESTS()
+        void CORETESTS()
         {
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("CORE TESTS");
@@ -39,10 +52,9 @@ namespace SDLGUITEST
             COLOUR_CREATECOLOUR_COLOURCREATED(255, 0, 255, 0);
             COLOUR_CREATECOLOUR_COLOURCREATED(0, 255, 255, 0);
             COLOUR_CREATECOLOUR_COLOURCREATED(255, 255, 255, 255);
-
         }
 
-        public void COLOUR_CREATECOLOUR_COLOURCREATED(byte r, byte g, byte b, byte a)
+        void COLOUR_CREATECOLOUR_COLOURCREATED(byte r, byte g, byte b, byte a)
         {
             runned++;
             // Arrange
