@@ -25,7 +25,7 @@ namespace SDL_GUI
 
             while (window.running)
             {
-                window.ClearColorWindow(backgroundColour);
+                window.ClearColourWindow(backgroundColour);
 
 
                 // Events

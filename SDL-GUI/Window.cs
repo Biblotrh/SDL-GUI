@@ -22,8 +22,10 @@ namespace SDLGUI
         {
             SDL.SDL_DestroyRenderer(renderer);
             SDL.SDL_DestroyWindow(window);
+            window = IntPtr.Zero;
+            renderer = IntPtr.Zero;
         }
-        public void ClearColorWindow(Colour colour = null)
+        public void ClearColourWindow(Colour colour = null)
         {
             if (colour == null) colour = new Colour();
             SDL.SDL_SetRenderDrawColor(renderer, colour.r, colour.g, colour.b, colour.a);

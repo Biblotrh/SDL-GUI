@@ -15,8 +15,9 @@ namespace SDLGUIUNITTEST
             Console.ForegroundColor = ConsoleColor.White;
 
             CORETESTS();
+            WINDOWTEST();
 
-            if(runned == passed)
+            if (runned == passed)
             {
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("ALL TESTS PASSED");
@@ -53,6 +54,34 @@ namespace SDLGUIUNITTEST
             COLOUR_CREATECOLOUR_COLOURCREATED(0, 255, 255, 0);
             COLOUR_CREATECOLOUR_COLOURCREATED(255, 255, 255, 255);
         }
+        void WINDOWTEST()
+        {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("WINDOW TESTS");
+            Console.ForegroundColor = ConsoleColor.White;
+
+            WINDOW_CREATEWINDOW_WINDOWCREATED("Test", 800, 600);
+            WINDOW_CREATEWINDOW_WINDOWCREATED("Test", 1024, 768);
+            WINDOW_CREATEWINDOW_WINDOWCREATED("Test", 1280, 720);
+            WINDOW_CREATEWINDOW_WINDOWCREATED("Hello", 1920, 1080);
+            WINDOW_CREATEWINDOW_WINDOWCREATED("Hello", 2560, 1440);
+            WINDOW_CREATEWINDOW_WINDOWCREATED("World\nHello", 3840, 2160);
+            WINDOW_DESTROYWINDOW_WINDOWDESTROYED("Test", 800, 600);
+            WINDOW_DESTROYWINDOW_WINDOWDESTROYED("Test", 1024, 768);
+            WINDOW_DESTROYWINDOW_WINDOWDESTROYED("Test", 1280, 720);
+            WINDOW_DESTROYWINDOW_WINDOWDESTROYED("Hello", 1920, 1080);
+            WINDOW_DESTROYWINDOW_WINDOWDESTROYED("Hello", 2560, 1440);
+            WINDOW_DESTROYWINDOW_WINDOWDESTROYED("World\nHello", 3840, 2160);
+            WINDOW_CLEARCOLOURRENDER_CLEARCOLOURRENDERED("Test", 800, 600, 255, 255, 255, 0);
+            WINDOW_CLEARCOLOURRENDER_CLEARCOLOURRENDERED("Test", 1024, 768, 255, 255, 255, 0);
+            WINDOW_CLEARCOLOURRENDER_CLEARCOLOURRENDERED("Test", 1280, 720, 255, 255, 0, 255);
+            WINDOW_CLEARCOLOURRENDER_CLEARCOLOURRENDERED("Hello", 1920, 1080, 255, 0, 255, 255);
+            WINDOW_CLEARCOLOURRENDER_CLEARCOLOURRENDERED("Hello", 2560, 1440, 0, 255, 255, 255);
+            WINDOW_CLEARCOLOURRENDER_CLEARCOLOURRENDERED("World\nHello", 3840, 2160, 255, 0, 0, 255);
+            WINDOW_SYNCCLOK_CLOCKSYNCED("Test", 800, 600, 60, 100, 1);
+            WINDOW_SYNCCLOK_CLOCKSYNCED("Hello", 1024, 768, 60, 100, 1);
+
+        }
 
         void COLOUR_CREATECOLOUR_COLOURCREATED(byte r, byte g, byte b, byte a)
         {
@@ -73,6 +102,157 @@ namespace SDLGUIUNITTEST
                 Console.WriteLine("COLOUR_CREATECOLOUR_COLOURCREATED FAILED");
                 Console.ForegroundColor = ConsoleColor.White;
             }
+        }
+        void WINDOW_CREATEWINDOW_WINDOWCREATED(string title, int width, int height)
+        {
+            runned++;
+            // Arrange
+            Window window = new Window(title, width, height);
+            // Assert
+            SDL2.SDL.SDL_GetWindowSize(window.window, out int w, out int h);
+            if (window.window != IntPtr.Zero && window.renderer != IntPtr.Zero &&
+                SDL2.SDL.SDL_GetWindowTitle(window.window) == title && 
+                w == width && h == height)
+            {
+                passed++;
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("WINDOW_CREATEWINDOW_WINDOWCREATED PASSED");
+                Console.ForegroundColor = ConsoleColor.White;
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("WINDOW_CREATEWINDOW_WINDOWCREATED FAILED");
+                Console.ForegroundColor = ConsoleColor.White;
+            }
+            // clean up
+            window.DestroyWindow();
+        }
+        void WINDOW_DESTROYWINDOW_WINDOWDESTROYED(string title, int width, int height)
+        {
+            runned++;
+            // Arrange
+            Window window = new Window(title, width, height);
+            // Assert
+            SDL2.SDL.SDL_GetWindowSize(window.window, out int w, out int h);
+            if (window.window != IntPtr.Zero && window.renderer != IntPtr.Zero &&
+                SDL2.SDL.SDL_GetWindowTitle(window.window) == title &&
+                w == width && h == height)
+            {
+                window.DestroyWindow();
+                if (window.window == IntPtr.Zero && window.renderer == IntPtr.Zero)
+                {
+                    passed++;
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine("WINDOW_DESTROYWINDOW_WINDOWDESTROYED PASSED");
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("WINDOW_DESTROYWINDOW_WINDOWDESTROYED FAILED DESTROY WINDOW");
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("WINDOW_DESTROYWINDOW_WINDOWDESTROYED FAILED AT CREATE WINDOW");
+                Console.ForegroundColor = ConsoleColor.White;
+                window.DestroyWindow();
+            }
+        }
+        void WINDOW_CLEARCOLOURRENDER_CLEARCOLOURRENDERED(string title, int width, int height, byte r, byte g, byte b ,byte a)
+        {
+            runned++;
+            // Arrange
+            Window window = new Window(title, width, height);
+            SDL2.SDL.SDL_GetWindowSize(window.window, out int w, out int h);
+            if (window.window != IntPtr.Zero && window.renderer != IntPtr.Zero &&
+                SDL2.SDL.SDL_GetWindowTitle(window.window) == title &&
+                w == width && h == height)
+            {
+                // Act
+                Colour colour = new Colour(r, g, b, a);
+                window.ClearColourWindow(colour);
+                
+                // Assert
+                SDL2.SDL.SDL_GetRenderDrawColor(window.renderer, out byte rr, out byte gg, out byte bb, out byte aa);
+                if(rr == r && gg == g && bb == b && aa == a)
+                {
+                    passed++;
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine("WINDOW_CLEARCOLOURRENDER_CLEARCOLOURRENDERED PASSED");
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("WINDOW_CLEARCOLOURRENDER_CLEARCOLOURRENDERED FAILED AT RENDER DRAW COLOUR");
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("WINDOW_CLEARCOLOURRENDER_CLEARCOLOURRENDERED FAILED AT CREATE WINDOW");
+                Console.ForegroundColor = ConsoleColor.White;
+            }
+            // clean up
+            window.DestroyWindow();
+        }
+        void WINDOW_SYNCCLOK_CLOCKSYNCED(string title, int width, int height, uint fps, int testammount, float error)
+        {
+            runned++;
+            // Arrange
+            Window window = new Window(title, width, height);
+            SDL2.SDL.SDL_GetWindowSize(window.window, out int w, out int h);
+            if (window.window != IntPtr.Zero && window.renderer != IntPtr.Zero &&
+                SDL2.SDL.SDL_GetWindowTitle(window.window) == title &&
+                w == width && h == height)
+            {
+                window.SyncingClock = true;
+                window.fps = fps;
+                DateTime lastTime = DateTime.Now;
+                TimeSpan avg = TimeSpan.Zero;
+                int loop = 0;
+
+                // Act
+                while (loop <= testammount)
+                {
+                    DateTime currentTime = DateTime.Now;
+                    TimeSpan timeDiff = currentTime - lastTime;
+                    avg += timeDiff;
+
+                    window.PresentWindow();
+                    loop++;
+                    lastTime = currentTime;
+                }
+                double avgfps = 1000.0f / (avg.TotalMilliseconds / testammount);
+
+                // Assert
+                if (avgfps > fps - error && avgfps < fps + error)
+                {
+                    passed++;
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine("WINDOW_SYNCCLOK_CLOCKSYNCED PASSED");
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("WINDOW_SYNCCLOK_CLOCKSYNCED FAILED");
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("WINDOW_SYNCCLOK_CLOCKSYNCED FAILED AT CREATE WINDOW");
+                Console.ForegroundColor = ConsoleColor.White;
+            }
+            // clean up
+            window.DestroyWindow();
         }
     }
 }
