@@ -53,6 +53,15 @@ namespace SDLGUIUNITTEST
             COLOUR_CREATECOLOUR_COLOURCREATED(255, 0, 255, 0);
             COLOUR_CREATECOLOUR_COLOURCREATED(0, 255, 255, 0);
             COLOUR_CREATECOLOUR_COLOURCREATED(255, 255, 255, 255);
+            COLOUR_CREATECOLOUR_COLOURCREATED(0);
+            COLOUR_CREATECOLOUR_COLOURCREATED(255);
+            COLOUR_CREATECOLOUR_COLOURCREATED(0, 0);
+            COLOUR_CREATECOLOUR_COLOURCREATED(255, 255);
+            COLOUR_CREATECOLOUR_COLOURCREATED(0, 0, 0);
+            COLOUR_CREATECOLOUR_COLOURCREATED(255, 255, 255);
+            COLOUR_CREATECOLOUR_COLOURCREATED(255, 0, 0);
+            COLOUR_CREATECOLOUR_COLOURCREATED(0, 255, 0);
+            COLOUR_CREATECOLOUR_COLOURCREATED(0, 0, 255);
         }
         void WINDOWTEST()
         {
@@ -66,28 +75,38 @@ namespace SDLGUIUNITTEST
             WINDOW_CREATEWINDOW_WINDOWCREATED("Hello", 1920, 1080);
             WINDOW_CREATEWINDOW_WINDOWCREATED("Hello", 2560, 1440);
             WINDOW_CREATEWINDOW_WINDOWCREATED("World\nHello", 3840, 2160);
+            WINDOW_CREATEWINDOW_WINDOWCREATED("Test");
+            WINDOW_CREATEWINDOW_WINDOWCREATED("Test", 1024);
+            
             WINDOW_DESTROYWINDOW_WINDOWDESTROYED("Test", 800, 600);
             WINDOW_DESTROYWINDOW_WINDOWDESTROYED("Test", 1024, 768);
             WINDOW_DESTROYWINDOW_WINDOWDESTROYED("Test", 1280, 720);
             WINDOW_DESTROYWINDOW_WINDOWDESTROYED("Hello", 1920, 1080);
             WINDOW_DESTROYWINDOW_WINDOWDESTROYED("Hello", 2560, 1440);
             WINDOW_DESTROYWINDOW_WINDOWDESTROYED("World\nHello", 3840, 2160);
+            
             WINDOW_CLEARCOLOURRENDER_CLEARCOLOURRENDERED("Test", 800, 600, 255, 255, 255, 0);
             WINDOW_CLEARCOLOURRENDER_CLEARCOLOURRENDERED("Test", 1024, 768, 255, 255, 255, 0);
             WINDOW_CLEARCOLOURRENDER_CLEARCOLOURRENDERED("Test", 1280, 720, 255, 255, 0, 255);
             WINDOW_CLEARCOLOURRENDER_CLEARCOLOURRENDERED("Hello", 1920, 1080, 255, 0, 255, 255);
             WINDOW_CLEARCOLOURRENDER_CLEARCOLOURRENDERED("Hello", 2560, 1440, 0, 255, 255, 255);
             WINDOW_CLEARCOLOURRENDER_CLEARCOLOURRENDERED("World\nHello", 3840, 2160, 255, 0, 0, 255);
-            WINDOW_SYNCCLOK_CLOCKSYNCED("Test", 800, 600, 60, 100, 1);
-            WINDOW_SYNCCLOK_CLOCKSYNCED("Hello", 1024, 768, 60, 100, 1);
+            
+            WINDOW_SYNCCLOK_CLOCKSYNCED("Test", 800, 600, 60, 100, 5);
+            WINDOW_SYNCCLOK_CLOCKSYNCED("Hello", 1024, 768, 60, 100, 5);
+            WINDOW_SYNCCLOK_CLOCKSYNCED("Hello\nWorld", 1024, 768, 100, 100, 10);
 
         }
 
-        void COLOUR_CREATECOLOUR_COLOURCREATED(byte r, byte g, byte b, byte a)
+        void COLOUR_CREATECOLOUR_COLOURCREATED(byte ?r = null, byte ?g = null, byte ?b = null, byte ?a = null)
         {
             runned++;
             // Arrange
             Colour colour = new Colour(r, g, b, a);
+            if (r == null) r = 0;
+            if (g == null) g = 0;
+            if (b == null) b = 0;
+            if (a == null) a = 0;
             // Assert
             if (colour.r == r && colour.g == g && colour.b == b && colour.a == a)
             {
@@ -103,11 +122,13 @@ namespace SDLGUIUNITTEST
                 Console.ForegroundColor = ConsoleColor.White;
             }
         }
-        void WINDOW_CREATEWINDOW_WINDOWCREATED(string title, int width, int height)
+        void WINDOW_CREATEWINDOW_WINDOWCREATED(string title, int? width = null, int? height = null)
         {
             runned++;
             // Arrange
             Window window = new Window(title, width, height);
+            if (width == null) width = 800;
+            if (height == null) height = 800;
             // Assert
             SDL2.SDL.SDL_GetWindowSize(window.window, out int w, out int h);
             if (window.window != IntPtr.Zero && window.renderer != IntPtr.Zero &&
@@ -211,27 +232,21 @@ namespace SDLGUIUNITTEST
                 SDL2.SDL.SDL_GetWindowTitle(window.window) == title &&
                 w == width && h == height)
             {
-                window.SyncingClock = true;
                 window.fps = fps;
-                DateTime lastTime = DateTime.Now;
-                TimeSpan avg = TimeSpan.Zero;
                 int loop = 0;
+                double avg = 0;
 
                 // Act
                 while (loop <= testammount)
                 {
-                    DateTime currentTime = DateTime.Now;
-                    TimeSpan timeDiff = currentTime - lastTime;
-                    avg += timeDiff;
-
+                    avg += window.fpsData;
                     window.PresentWindow();
                     loop++;
-                    lastTime = currentTime;
                 }
-                double avgfps = 1000.0f / (avg.TotalMilliseconds / testammount);
+                double avgFPS = avg / testammount;
 
                 // Assert
-                if (avgfps > fps - error && avgfps < fps + error)
+                if (avgFPS > fps - error && avgFPS < fps + error)
                 {
                     passed++;
                     Console.ForegroundColor = ConsoleColor.Green;

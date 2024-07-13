@@ -1,32 +1,27 @@
-﻿using SDLGUI;
-#if DEBUG
-using SDLGUIUNITTEST;
-#endif
-using System;
-
-namespace SDL_GUI
+﻿namespace SDL_GUI
 {
     static class MainClass
     {
         static void Main()
         {
-            #if DEBUG
-                SDLGUITEST test = new SDLGUITEST();
-            #endif
+#if DEBUG
+            SDLGUIUNITTEST.SDLGUITEST test = new SDLGUIUNITTEST.SDLGUITEST();
+#endif
 
-            Window window = new Window("Test", 800, 600);
+            SDLGUI.Window window = new SDLGUI.Window("Test");
 
-            Colour backgroundColour = new Colour(255, 255, 0, 255);
+            // [Note] Thread Load And Create Assets witch background loading screen
 
-            // Check FPS
-            DateTime lastTime = DateTime.Now;
-            window.SyncingClock = true;
-            window.fps = 200;
+            // Set FPS
+            window.fps = 60;
 
             while (window.running)
             {
-                window.ClearColourWindow(backgroundColour);
+                // SetBackgroundColour
+                window.ClearColourWindow(SDLGUI.Assets.YellowColour);
 
+                // Write FPS
+                System.Console.WriteLine("FPS: " + window.fpsData);
 
                 // Events
                 window.EventLoop((e) =>
@@ -34,12 +29,7 @@ namespace SDL_GUI
                     if (e.type == SDL2.SDL.SDL_EventType.SDL_QUIT) window.running = false;
                 });
 
-                // Write FPS
-                DateTime currentTime = DateTime.Now;
-                TimeSpan timeDiff = currentTime - lastTime;
-                Console.WriteLine(1/timeDiff.TotalSeconds);
-                lastTime = currentTime;
-
+                // Update Window
                 window.PresentWindow();
             }
 
