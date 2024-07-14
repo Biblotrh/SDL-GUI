@@ -1,3 +1,5 @@
+using System;
+
 namespace SDLGUI
 {
     class Window
@@ -70,5 +72,32 @@ namespace SDLGUI
         {
             if (events.type == SDL2.SDL.SDL_EventType.SDL_QUIT) running = false;
         }
+    }
+    class Text
+    {
+        public string text = "text";
+        public Colour colour = Assets.BlackColour;
+        public Font font = new Font();
+        public bool blend = false;
+        public int x = 0;
+        public int y = 0;
+        
+        SDL2.SDL.SDL_Rect textbox = new SDL2.SDL.SDL_Rect();
+        System.IntPtr texture = System.IntPtr.Zero;
+
+        public Text(IntPtr renderer) { Update(renderer); }
+        public void Update(IntPtr renderer) 
+        {
+            textbox.x = x;
+            textbox.y = y;
+            textbox.w = text.Length * font.size;
+            textbox.h = font.size;
+            SDL2.SDL.SDL_Color sdl_colour = new SDL2.SDL.SDL_Color();
+            sdl_colour.Equals(colour);
+            if (!blend) texture = SDL2.SDL.SDL_CreateTextureFromSurface(renderer, SDL2.SDL_ttf.TTF_RenderText_Solid(font.font, text, sdl_colour));
+            else texture = SDL2.SDL.SDL_CreateTextureFromSurface(renderer, SDL2.SDL_ttf.TTF_RenderText_Blended(font.font, text, sdl_colour));
+        }
+        public void render(IntPtr renderer) { SDL2.SDL.SDL_RenderCopy(renderer, texture, System.IntPtr.Zero, ref textbox); }
+        public void Destroy() { font.Destroy(); }
     }
 }

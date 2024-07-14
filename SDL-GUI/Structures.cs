@@ -19,4 +19,14 @@
             this.a = (byte)a;
         }
     }
+    public class Font
+    {
+        public System.IntPtr font = System.IntPtr.Zero;
+        public string path = "assets/fonts/SplineSansMono.ttf";
+        public int size = 24;
+        
+        public Font() { Update(); }
+        public void Update() { font = SDL2.SDL_ttf.TTF_OpenFont(path, size); }
+        public void Destroy() { SDL2.SDL_ttf.TTF_CloseFont(font); font = System.IntPtr.Zero; }
+    }
 }

@@ -14,11 +14,16 @@
 
             // Set FPS
             window.fps = 60;
+            // Add text
+            SDLGUI.Text text = new SDLGUI.Text(window.renderer);
 
             while (window.running)
             {
                 // SetBackgroundColour
                 window.ClearColourWindow(SDLGUI.Assets.YellowColour);
+
+                // render text
+                text.render(window.renderer);
 
                 // Write FPS
                 System.Console.WriteLine("FPS: " + window.fpsData);
