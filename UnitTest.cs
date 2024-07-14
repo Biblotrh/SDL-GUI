@@ -106,7 +106,7 @@ namespace SDLGUIUNITTEST
             if (r == null) r = 0;
             if (g == null) g = 0;
             if (b == null) b = 0;
-            if (a == null) a = 0;
+            if (a == null) a = 255;
             // Assert
             if (colour.r == r && colour.g == g && colour.b == b && colour.a == a)
             {

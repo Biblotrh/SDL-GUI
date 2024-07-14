@@ -1,9 +1,14 @@
-﻿namespace SDL_GUI
+﻿using SDL2;
+
+namespace SDL_GUI
 {
     static class MainClass
     {
         static void Main()
         {
+            // Init
+            SDLGUI.SDLGUI.Init();
+
 #if DEBUG
             SDLGUIUNITTEST.SDLGUITEST test = new SDLGUIUNITTEST.SDLGUITEST();
 #endif
@@ -23,7 +28,7 @@
                 window.ClearColourWindow(SDLGUI.Assets.YellowColour);
 
                 // render text
-                text.render(window.renderer);
+                text.Render(window.renderer);
 
                 // Write FPS
                 System.Console.WriteLine("FPS: " + window.fpsData);
