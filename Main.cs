@@ -1,8 +1,5 @@
-﻿using SDLGUI;
-#if DEBUG
-using SDLGUIUNITTEST;
-#endif
-using System;
+﻿using SDL2;
+using SDLGUI;
 
 namespace SDL_GUI
 {
@@ -10,23 +7,37 @@ namespace SDL_GUI
     {
         static void Main()
         {
-            #if DEBUG
-                SDLGUITEST test = new SDLGUITEST();
-            #endif
+            // Init
+            SDLGUI.SDLGUI.Init();
 
-            Window window = new Window("Test", 800, 600);
+#if DEBUG
+            SDLGUIUNITTEST.SDLGUITEST test = new SDLGUIUNITTEST.SDLGUITEST();
+#endif
 
-            Colour backgroundColour = new Colour(255, 255, 0, 255);
+            SDLGUI.Window window = new SDLGUI.Window("Test");
 
-            // Check FPS
-            DateTime lastTime = DateTime.Now;
-            window.SyncingClock = true;
-            window.fps = 200;
+            // [Note] Thread Load And Create Assets witch background loading screen
+
+            // Set FPS
+            window.fps = 60;
+
+            // Add text
+            SDLGUI.Text text = new SDLGUI.Text(window.renderer);
+            SDLGUI.Font font = new SDLGUI.Font(SDLGUI.Assets.pathToFonts + "OpenSans-Regular.ttf", 24);
+            SDL2.SDL_ttf.TTF_SetFontStyle(font.font, SDL2.SDL_ttf.TTF_STYLE_BOLD);
+            text.font = font;
+            text.Update(window.renderer);
 
             while (window.running)
             {
-                window.ClearColourWindow(backgroundColour);
+                // SetBackgroundColour
+                window.ClearColourWindow(SDLGUI.Assets.YellowColour);
 
+                // render text
+                text.Render(window.renderer);
+
+                // Write FPS
+                System.Console.WriteLine("FPS: " + window.fpsData);
 
                 // Events
                 window.EventLoop((e) =>
@@ -34,15 +45,12 @@ namespace SDL_GUI
                     if (e.type == SDL2.SDL.SDL_EventType.SDL_QUIT) window.running = false;
                 });
 
-                // Write FPS
-                DateTime currentTime = DateTime.Now;
-                TimeSpan timeDiff = currentTime - lastTime;
-                Console.WriteLine(1/timeDiff.TotalSeconds);
-                lastTime = currentTime;
-
+                // Update Window
                 window.PresentWindow();
             }
 
+            text.Destroy();
+            font.Destroy();
             window.DestroyWindow();
         }
     }
