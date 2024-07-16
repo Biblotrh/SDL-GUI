@@ -14,7 +14,8 @@ namespace SDLGUIUNITTEST
             Console.WriteLine("SDL GUI UNIT TEST");
             Console.ForegroundColor = ConsoleColor.White;
 
-            CORETESTS();
+            STRUCTURETESTS();
+            TEXTTEST();
             WINDOWTEST();
 
             if (runned == passed)
@@ -31,10 +32,10 @@ namespace SDLGUIUNITTEST
             }
         }
 
-        void CORETESTS()
+        void STRUCTURETESTS()
         {
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("CORE TESTS");
+            Console.WriteLine("STRUCTURE TESTS");
             Console.ForegroundColor = ConsoleColor.White;
 
             COLOUR_CREATECOLOUR_COLOURCREATED(0, 0, 0, 0);
@@ -62,6 +63,79 @@ namespace SDLGUIUNITTEST
             COLOUR_CREATECOLOUR_COLOURCREATED(255, 0, 0);
             COLOUR_CREATECOLOUR_COLOURCREATED(0, 255, 0);
             COLOUR_CREATECOLOUR_COLOURCREATED(0, 0, 255);
+            COLOURHEX_CREATECOLOUR_COLOURCREATED("000000");
+            COLOURHEX_CREATECOLOUR_COLOURCREATED("FFFFFF");
+            COLOURHEX_CREATECOLOUR_COLOURCREATED("FF0000");
+            COLOURHEX_CREATECOLOUR_COLOURCREATED("00FF00");
+            COLOURHEX_CREATECOLOUR_COLOURCREATED("0000FF");
+            COLOURHEX_CREATECOLOUR_COLOURCREATED("FFFF00", 255);
+            COLOURHEX_CREATECOLOUR_COLOURCREATED("FF00FF", 50);
+            COLOURHEX_CREATECOLOUR_COLOURCREATED("00FFFF", 100);
+            COLOURHEX_CREATECOLOUR_COLOURCREATED("FF0000", 0);
+            
+            FONT_CREATEFONT_FONTCREATED(Assets.pathToFonts + "OpenSans-Regular.ttf", 24);
+            FONT_CREATEFONT_FONTCREATED(Assets.pathToFonts + "OpenSans-Regular.ttf", 12);
+            FONT_CREATEFONT_FONTCREATED(Assets.pathToFonts + "OpenSans-Regular.ttf", 36);
+            FONT_CREATEFONT_FONTCREATED(Assets.pathToFonts + "OpenSans-Regular.ttf", 48);
+            FONT_CREATEFONT_FONTCREATED(Assets.pathToFonts + "OpenSans-Regular.ttf", 60);
+            FONT_CREATEFONT_FONTCREATED(Assets.pathToFonts + "OpenSans-Regular.ttf", 72);
+            FONT_CREATEFONT_FONTCREATED(Assets.pathToFonts + "OpenSans-Regular.ttf", 84);
+            FONT_CREATEFONT_FONTCREATED(Assets.pathToFonts + "OpenSans-Regular.ttf", 96);
+            FONT_CREATEFONT_FONTCREATED(Assets.pathToFonts + "OpenSans-Regular.ttf", 108);
+            FONT_DESTROYFONT_FONTDESTROYED(Assets.pathToFonts + "OpenSans-Regular.ttf", 24);
+            FONT_DESTROYFONT_FONTDESTROYED(Assets.pathToFonts + "OpenSans-Regular.ttf", 12);
+            FONT_DESTROYFONT_FONTDESTROYED(Assets.pathToFonts + "OpenSans-Regular.ttf", 36);
+            FONT_DESTROYFONT_FONTDESTROYED(Assets.pathToFonts + "OpenSans-Regular.ttf", 48);
+            FONT_DESTROYFONT_FONTDESTROYED(Assets.pathToFonts + "OpenSans-Regular.ttf", 60);
+            FONT_DESTROYFONT_FONTDESTROYED(Assets.pathToFonts + "OpenSans-Regular.ttf", 72);
+            FONT_DESTROYFONT_FONTDESTROYED(Assets.pathToFonts + "OpenSans-Regular.ttf", 84);
+            FONT_DESTROYFONT_FONTDESTROYED(Assets.pathToFonts + "OpenSans-Regular.ttf", 96);
+            FONT_DESTROYFONT_FONTDESTROYED(Assets.pathToFonts + "OpenSans-Regular.ttf", 108);
+        }
+        void TEXTTEST()
+        {
+            System.Console.ForegroundColor = ConsoleColor.Yellow;
+            System.Console.WriteLine("TEXT TESTS");
+            System.Console.ForegroundColor = ConsoleColor.White;
+
+            TEXT_CREATTEXT_TEXTCREATED("Hello");
+            TEXT_CREATTEXT_TEXTCREATED("Hello World");
+            TEXT_CREATTEXT_TEXTCREATED("Hello World!!!");
+            TEXT_CREATTEXT_TEXTCREATED("Hello World!!!\nHello World!!!");
+            TEXT_CREATTEXT_TEXTCREATED("Hello World!!!\nHello World!!!\nHello World!!!");
+            TEXT_CREATTEXT_TEXTCREATED("Hello World!!!\nHello World!!!\nHello World!!!\nHello World!!!");
+            TEXT_DESTROYTEXT_TEXTDESTROYED("Hello");
+            TEXT_DESTROYTEXT_TEXTDESTROYED("Hello World");
+            TEXT_DESTROYTEXT_TEXTDESTROYED("Hello World!!!");
+            TEXT_DESTROYTEXT_TEXTDESTROYED("Hello World!!!\nHello World!!!");
+            TEXT_DESTROYTEXT_TEXTDESTROYED("Hello World!!!\nHello World!!!\nHello World!!!");
+            TEXT_DESTROYTEXT_TEXTDESTROYED("Hello World!!!\nHello World!!!\nHello World!!!\nHello World!!!");
+            TEXT_SETPOSITIONANDSIZE_TEXTSET(0, 0, 0, 0);
+            TEXT_SETPOSITIONANDSIZE_TEXTSET(100, 100, 100, 100);
+            TEXT_SETPOSITIONANDSIZE_TEXTSET(200, 200, 200, 200);
+            TEXT_SETPOSITIONANDSIZE_TEXTSET(3000, 3000, 3000, 3000);
+            TEXT_SETPOSITIONANDSIZE_TEXTSET(4000, 4000, 4000, 4000);
+            TEXT_UPDATECOLOUR_COLOURUPDATED("000000", 0);
+            TEXT_UPDATECOLOUR_COLOURUPDATED("FFFFFF", 255);
+            TEXT_UPDATECOLOUR_COLOURUPDATED("FF0000", 255);
+            TEXT_UPDATECOLOUR_COLOURUPDATED("00FF00", 255);
+            TEXT_UPDATECOLOUR_COLOURUPDATED("0000FF", 255);
+            TEXT_UPDATECOLOUR_COLOURUPDATED("FFFF00", 255);
+            TEXT_UPDATECOLOUR_COLOURUPDATED("FF00FF", 50);
+            TEXT_UPDATECOLOUR_COLOURUPDATED("00FFFF", 100);
+            TEXT_UPDATEFONT_FONTUPDATED(Assets.pathToFonts + "OpenSans-Regular.ttf", 24);
+            TEXT_UPDATEFONT_FONTUPDATED(Assets.pathToFonts + "OpenSans-Regular.ttf", 12);
+            TEXT_UPDATEFONT_FONTUPDATED(Assets.pathToFonts + "OpenSans-Regular.ttf", 36);
+            TEXT_UPDATEFONT_FONTUPDATED(Assets.pathToFonts + "OpenSans-Regular.ttf", 48);
+            TEXT_UPDATEFONT_FONTUPDATED(Assets.pathToFonts + "OpenSans-Regular.ttf", 60);
+            TEXT_UPDATEFONT_FONTUPDATED(Assets.pathToFonts + "OpenSans-Regular.ttf", 72);
+            TEXT_UPDATEFONT_FONTUPDATED(Assets.pathToFonts + "OpenSans-Regular.ttf", 84);
+            TEXT_AUTOSIZE_AUTOSIZED("HELLO");
+            TEXT_AUTOSIZE_AUTOSIZED("HELLO WORLD");
+            TEXT_AUTOSIZE_AUTOSIZED("HELLO WORLD!!!");
+            TEXT_AUTOSIZE_AUTOSIZED("HELLO WORLD!!!\nHELLO WORLD!!!");
+            TEXT_AUTOSIZE_AUTOSIZED("HELLO WORLD!!!\nHELLO WORLD!!!\nHELLO WORLD!!!");
+            TEXT_AUTOSIZE_AUTOSIZED("HELLO WORLD!!!\nHELLO WORLD!!!\nHELLO WORLD!!!\nHELLO WORLD!!!");
         }
         void WINDOWTEST()
         {
@@ -98,15 +172,12 @@ namespace SDLGUIUNITTEST
 
         }
 
-        void COLOUR_CREATECOLOUR_COLOURCREATED(byte ?r = null, byte ?g = null, byte ?b = null, byte ?a = null)
+        void COLOUR_CREATECOLOUR_COLOURCREATED(byte r = 255, byte g = 255, byte b = 255, byte a = 255)
         {
             runned++;
             // Arrange
             Colour colour = new Colour(r, g, b, a);
-            if (r == null) r = 0;
-            if (g == null) g = 0;
-            if (b == null) b = 0;
-            if (a == null) a = 255;
+
             // Assert
             if (colour.r == r && colour.g == g && colour.b == b && colour.a == a)
             {
@@ -119,6 +190,30 @@ namespace SDLGUIUNITTEST
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("COLOUR_CREATECOLOUR_COLOURCREATED FAILED");
+                Console.ForegroundColor = ConsoleColor.White;
+            }
+        }
+        void COLOURHEX_CREATECOLOUR_COLOURCREATED(string hexString = "000000", byte a = 255)
+        {
+            runned++;
+            // Arrange
+            Colour colour = new Colour(hexString, a);
+            byte r = System.Convert.ToByte(hexString.Substring(0, 2), 16);
+            byte g = System.Convert.ToByte(hexString.Substring(2, 2), 16);
+            byte b = System.Convert.ToByte(hexString.Substring(4, 2), 16);
+
+            // Assert
+            if (colour.r == r && colour.g == g && colour.b == b && colour.a == a)
+            {
+                passed++;
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("COLOURHEX_CREATECOLOUR_COLOURCREATED PASSED");
+                Console.ForegroundColor = ConsoleColor.White;
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("COLOURHEX_CREATECOLOUR_COLOURCREATED FAILED");
                 Console.ForegroundColor = ConsoleColor.White;
             }
         }
@@ -267,6 +362,249 @@ namespace SDLGUIUNITTEST
                 Console.ForegroundColor = ConsoleColor.White;
             }
             // clean up
+            window.DestroyWindow();
+        }
+        public void FONT_CREATEFONT_FONTCREATED(string path, int size = 24)
+        {
+            // Arrange
+            runned++;
+            // Act
+            Font font = new Font(path, size);
+            // Assert
+            if (font.font != System.IntPtr.Zero && font.fontSize == size)
+            {
+                passed++;
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("FONT_CREATEFONT_FONTCREATED PASSED");
+                Console.ForegroundColor = ConsoleColor.White;
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("FONT_CREATEFONT_FONTCREATED FAILED");
+                Console.ForegroundColor = ConsoleColor.White;
+            }
+        }
+        public void FONT_DESTROYFONT_FONTDESTROYED(string path, int size = 24)
+        {
+            // Arrange
+            runned++;
+            Font font = new Font(path, size);
+            if(font.font != System.IntPtr.Zero && font.fontSize == size)
+            {
+                // Act
+                font.Destroy();
+                // Assert
+                if (font.font == System.IntPtr.Zero)
+                {
+                    passed++;
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine("FONT_DESTROYFONT_FONTDESTROYED PASSED");
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("FONT_DESTROYFONT_FONTDESTROYED FAILED");
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("FONT_DESTROYFONT_FONTDESTROYED FAILED AT CREATE FONT");
+                Console.ForegroundColor = ConsoleColor.White;
+                font.Destroy();
+            }
+        }
+        public void TEXT_CREATTEXT_TEXTCREATED(string text = "Hello")
+        {
+            // arrange
+            runned++;
+            Window window = new Window("Test", 800, 600);
+            // act
+            Text textTest = new Text(window.renderer);
+            textTest.text = text;
+            textTest.Update(window.renderer);
+            // assert
+            if(textTest.text == text && textTest.font.font != IntPtr.Zero && textTest.texture != IntPtr.Zero)
+            {
+                passed++;
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("TEXT_CREATTEXT_TEXTCREATED PASSED");
+                Console.ForegroundColor = ConsoleColor.White;
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("TEXT_CREATTEXT_TEXTCREATED FAILED");
+                Console.ForegroundColor = ConsoleColor.White;
+            }
+            // clean Up
+            textTest.Destroy();
+            window.DestroyWindow();
+        }
+        public void TEXT_DESTROYTEXT_TEXTDESTROYED(string text = "Hello")
+        {
+            // arrange
+            runned++;
+            Window window = new Window("Test", 800, 600);
+            Text textTest = new Text(window.renderer);
+            textTest.text = text;
+            textTest.Update(window.renderer);
+            if(textTest.text == text && textTest.font.font != IntPtr.Zero && textTest.texture != IntPtr.Zero)
+            {
+                // act
+                textTest.Destroy();
+                // assert
+                if (textTest.texture == IntPtr.Zero)
+                {
+                    passed++;
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine("TEXT_DESTROYTEXT_TEXTDESTROYED PASSED");
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("TEXT_DESTROYTEXT_TEXTDESTROYED FAILED");
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("TEXT_DESTROYTEXT_TEXTDESTROYED FAILED AT CREATE TEXT");
+                Console.ForegroundColor = ConsoleColor.White;
+                textTest.Destroy();
+            }
+            // clean Up
+            textTest.Destroy();
+            window.DestroyWindow();
+        }
+        public void TEXT_SETPOSITIONANDSIZE_TEXTSET(int x = 0, int y = 0, int w = 0, int h = 0)
+        {
+            // arrange
+            runned++;
+            Window window = new Window("Test", 800, 600);
+            Text textTest = new Text(window.renderer);
+            // act
+            textTest.autoSize = false;
+            textTest.x = x;
+            textTest.y = y;
+            textTest.w = w;
+            textTest.h = h;
+            textTest.Update(window.renderer);
+            // assert
+            if (textTest.x == x && textTest.y == y && textTest.w == w && textTest.h == h)
+            {
+                passed++;
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("TEXT_SETPOSITIONANDSIZE_TEXTSET PASSED");
+                Console.ForegroundColor = ConsoleColor.White;
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("TEXT_SETPOSITIONANDSIZE_TEXTSET FAILED");
+                Console.ForegroundColor = ConsoleColor.White;
+            }
+            // cleanUp
+            textTest.Destroy();
+            window.DestroyWindow();
+
+        }
+        public void TEXT_AUTOSIZE_AUTOSIZED(string text = "HELLO")
+        {
+            // Arrange
+            runned++;
+            Window window = new Window("Test", 800, 600);
+            Text textTest = new Text(window.renderer);
+            // Act
+            textTest.autoSize = true;
+            textTest.text = text;
+            textTest.Update(window.renderer);
+            // Assert
+            if (textTest.w == text.Length * textTest.font.fontSize && textTest.h == textTest.font.fontSize)
+            {
+                passed++;
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("TEXT_AUTOSIZE_AUTOSIZED PASSED");
+                Console.ForegroundColor = ConsoleColor.White;
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("TEXT_AUTOSIZE_AUTOSIZED FAILED");
+                Console.ForegroundColor = ConsoleColor.White;
+            }
+            // clean Up
+            textTest.Destroy();
+            window.DestroyWindow();
+        }
+        public void TEXT_UPDATECOLOUR_COLOURUPDATED(string hexText = "000000", byte a = 255)
+        {
+            // arrange
+            runned++;
+            Window window = new Window("Test", 800, 600);
+            Text textTest = new Text(window.renderer);
+            Colour colour = new Colour(hexText, a);
+            // act
+            if(textTest.colour.r == 0 && textTest.colour.g == 0 && textTest.colour.b == 0 && textTest.colour.a == 255)
+            {
+                textTest.colour = colour;
+                textTest.Update(window.renderer);
+                // assert
+                if (textTest.colour.r == colour.r && textTest.colour.g == colour.g && textTest.colour.b == colour.b && textTest.colour.a == colour.a)
+                {
+                    passed++;
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine("TEXT_UPDATECOLOUR_COLOURUPDATED PASSED");
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("TEXT_UPDATECOLOUR_COLOURUPDATED FAILED");
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("TEXT_UPDATECOLOUR_COLOURUPDATED FAILED AT CREATE TEXT");
+                Console.ForegroundColor = ConsoleColor.White;
+            }
+            // cleanUp
+            textTest.Destroy();
+            window.DestroyWindow();
+        }
+        public void TEXT_UPDATEFONT_FONTUPDATED(string path, int size = 24)
+        {
+            // arrange
+            runned++;
+            Window window = new Window("Test", 800, 600);
+            Text textTest = new Text(window.renderer);
+            Font font = new Font(path, size);
+        // act
+            textTest.font = font;
+            textTest.Update(window.renderer);
+            // assert
+            if (textTest.font.font == font.font && textTest.font.fontSize == font.fontSize)
+            {
+                passed++;
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("TEXT_UPDATEFONT_FONTUPDATED PASSED");
+                Console.ForegroundColor = ConsoleColor.White;
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("TEXT_UPDATEFONT_FONTUPDATED FAILED");
+                Console.ForegroundColor = ConsoleColor.White;
+            }        
+            // cleanUP
+            textTest.Destroy();
             window.DestroyWindow();
         }
     }

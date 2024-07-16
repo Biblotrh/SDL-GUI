@@ -12,7 +12,7 @@
         public static Colour GoldColour = new Colour(255, 215, 0);
         public static Colour YellowColour = new Colour(255, 255, 0);
 
-        public static Font DefaultFont = new Font(pathToFonts + "OpenSans-Regular.ttf");
-        public static Font SplineSansMono24 = new Font(pathToFonts + "SplineSansMono.ttf");
+        public static Font DefaultFont24 = new Font(pathToFonts + "OpenSans-Regular.ttf", 24);
+        public static Font SplineSansMono24 = new Font(pathToFonts + "SplineSansMono.ttf", 24);
     }
 }

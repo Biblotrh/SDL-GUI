@@ -39,6 +39,8 @@ namespace SDLGUI
             SDL2.SDL.SDL_DestroyWindow(window);
             window = System.IntPtr.Zero;
             renderer = System.IntPtr.Zero;
+            running = false;
+            SDL2.SDL.SDL_Quit();
         }
         public void ClearColourWindow(Colour colour = null)
         {
@@ -83,42 +85,48 @@ namespace SDLGUI
     }
     class Text
     {
-        public string text = "text";
+        public string text = "Hello World!!!";
         public Colour colour = Assets.BlackColour;
-        public Font font = new Font(Assets.pathToFonts + "OpenSans-Regular.ttf");
-        public bool blend = true;
+        public Font font = Assets.DefaultFont24;
+        public bool blend = false;
         public bool autoSize = true;
         public int x = 0;
         public int y = 0;
         public int w = 0;
         public int h = 0;
 
-        SDL2.SDL.SDL_Rect textbox = new SDL2.SDL.SDL_Rect();
+        
+#if DEBUG 
+        public System.IntPtr texture = System.IntPtr.Zero;
+        public SDL2.SDL.SDL_Rect textBox = new SDL2.SDL.SDL_Rect();
+#else
+        SDL2.SDL.SDL_Rect textBox = new SDL2.SDL.SDL_Rect();
         System.IntPtr texture = System.IntPtr.Zero;
-
+#endif
         public Text(IntPtr renderer) { Update(renderer); }
         public void Update(IntPtr renderer) 
         {
             if(autoSize)
             {
-                w = text.Length * font.size;
-                h = font.size;
+                w = text.Length * font.fontSize;
+                h = font.fontSize;
             }
-            textbox.x = x;
-            textbox.y = y;
-            textbox.w = w;
-            textbox.h = h;
 
-            SDL2.SDL.SDL_Color sdl_colour = new SDL2.SDL.SDL_Color();
-            sdl_colour.r = colour.r;
-            sdl_colour.g = colour.g;
-            sdl_colour.b = colour.b;
-            sdl_colour.a = colour.a;
+            textBox.x = x;
+            textBox.y = y;
+            textBox.w = w;
+            textBox.h = h;
 
-            if (!blend) texture = SDL2.SDL.SDL_CreateTextureFromSurface(renderer, SDL2.SDL_ttf.TTF_RenderText_Solid(font.font, text, sdl_colour));
-            else texture = SDL2.SDL.SDL_CreateTextureFromSurface(renderer, SDL2.SDL_ttf.TTF_RenderText_Blended(font.font, text, sdl_colour));
+            SDL2.SDL.SDL_Color sdlColour = new SDL2.SDL.SDL_Color();
+            sdlColour.r = colour.r;
+            sdlColour.g = colour.g;
+            sdlColour.b = colour.b;
+            sdlColour.a = colour.a;
+
+            if (blend) texture = SDL2.SDL.SDL_CreateTextureFromSurface(renderer, SDL2.SDL_ttf.TTF_RenderUTF8_Blended(font.font, text, sdlColour));
+            else texture = SDL2.SDL.SDL_CreateTextureFromSurface(renderer, SDL2.SDL_ttf.TTF_RenderUTF8_Solid(font.font, text, sdlColour));
         }
-        public void Render(IntPtr renderer) { SDL2.SDL.SDL_RenderCopy(renderer, texture, System.IntPtr.Zero, ref textbox); }
-        public void Destroy() { font.Destroy(); }
+        public void Render(IntPtr renderer) { SDL2.SDL.SDL_RenderCopy(renderer, texture, System.IntPtr.Zero, ref textBox); }
+        public void Destroy() { SDL2.SDL.SDL_DestroyTexture(texture); texture = System.IntPtr.Zero; }
     }
 }
